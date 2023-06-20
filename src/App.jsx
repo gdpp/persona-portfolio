@@ -1,9 +1,9 @@
 function App() {
 
   return (
-    <>
-      <h1>Personal Portfolio</h1>
-    </>
+    <div>
+      Personal Portfolio
+    </div>
   )
 }
 
