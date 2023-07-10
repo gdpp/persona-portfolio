@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import emaijs from '@emailjs/browser';
+import emailjs from '@emailjs/browser';
 
 import { styles } from '../styles';
 import { EarthCanvas } from './canvas';
@@ -16,8 +16,37 @@ const Contact = () => {
     message: ""
   });
 
-  const handleChange = e => {};
-  const handleSubmit = e => {};
+  const handleChange = e => {
+    const {name, value} = e.target;
+    
+    setForm({...form, [name]: value});
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+
+    setLoading(true);
+
+    emailjs.send('service_uny0u8a', 'template_yrwr6jl', {
+      from_name: form.name,
+      to_name: 'Gustavo Perez',
+      from_email: form.email,
+      to_email: 'gustavo.perez.231191@gmail.com',
+      message: form.message
+    }, 'PFNzCkAetafInPoDO').then(() => {
+      setLoading(false);
+      alert('Thank you. I will get back to you as soon as possible');
+      setForm({
+        name: "",
+        email: "",
+        message: ""
+      }, (error) => {
+        setLoading(false);
+        console.log(error);
+        alert('Something went wrong.');
+      });
+    });
+  };
 
   return (
     <div className="xl:mt-12 xl:flex-row flex flex-col-reverse gap-10 overflow-hidden">
